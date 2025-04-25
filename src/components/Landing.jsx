@@ -204,82 +204,82 @@ export function Landing() {
                   className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
                 
                 >
-                  Curated Shop
+                Curated Shop
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                  Discover eco-friendly products and redeem learning points for
-                  sustainable choices.
+                Discover eco-friendly products and redeem learning points for
+                sustainable choices.
                 </p>
-              </div>
+            </div>
 
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <ActivitySquare className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/tracker")}/>
                 <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
 
                 >
-                  Health Tracker
+                Health Tracker
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                  Log cycles, symptoms, and moods to understand patterns and
-                  gain actionable health insights.
+                Log cycles, symptoms, and moods to understand patterns and
+                gain actionable health insights.
                 </p>
-              </div>
+            </div>
 
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <Stethoscope className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/consultations")}/>
                 <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
                 
                 >
-                  Expert Consultations
+                Expert Consultations
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                  Access trusted health professionals for personalized advice
-                  and timely support.
+                Access trusted health professionals for personalized advice
+                and timely support.
                 </p>
-              </div>
+            </div>
 
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <Bot className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/ChatBot")}/>
                 <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                  
+                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                
                 >
-                  Eve
+                Eve
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                  Get AI personalized insights, symptom analysis, and timely
-                  reminders tailored to your unique menstrual health needs.
+                Get AI personalized insights, symptom analysis, and timely
+                reminders tailored to your unique menstrual health needs.
                 </p>
-              </div>
+            </div>
 
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg  ">
+            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg  ">
                 <UsersRound className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/dashboard")}/>
                 <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                  
+                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                
                 >
-                  Parent's Dashboard
+                Parent's Dashboard
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 ">
-                  Stay informed with cycle updates, mood tracking, and AI
-                  alerts— supporting your child without compromising their
-                  privacy.
+                Stay informed with cycle updates, mood tracking, and AI
+                alerts— supporting your child without compromising their
+                privacy.
                 </p>
-              </div>
+            </div>
 
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <HeartPulse className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/symptomsanalyzer")}/>
                 <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                  
+                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                
                 >
-                  Health Lens
+                Health Lens
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                  An AI-powered tool to analyze symptoms, offer community
-                  insights, and provide actionable health advice.
+                An AI-powered tool to analyze symptoms, offer community
+                insights, and provide actionable health advice.
                 </p>
               </div>
 
