@@ -14,7 +14,7 @@ connectDb();
 app.get("/", (req, res) => {
   res.send("Shesync api is running");
 });
-// app.use("/api/user", authRoutes);
+app.use("/api/user", authRoutes);
 // app.use("/api/period", periodTrackingRoutes);
 // app.use("/api/post", postRoutes);
 

@@ -18,7 +18,7 @@ export async function signupController(req, res) {
     const newUser = new User({ name, email, password: hashedpassword });
 
     await newUser.save();
-    res.status(201).json({ message: "You have signed up essfully" });
+    res.status(201).json({ message: "You have signed up successfully" });
   } catch (error) {
     console.log("Error while signing you up", error);
     res.status(500).json({ message: "Error during signup" });
