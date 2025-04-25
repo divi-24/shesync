@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDb } from "./config/db.js";
-// import authRoutes from "./routes/authRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 // import periodTrackingRoutes from "./routes/periodTrackingRoutes.js";
 // import postRoutes from "./routes/postRoutes.js";
 dotenv.config();
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 connectDb();
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Shesync api is running");
 });
 // app.use("/api/user", authRoutes);
 // app.use("/api/period", periodTrackingRoutes);
