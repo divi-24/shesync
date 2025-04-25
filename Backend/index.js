@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDb } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
-// import periodTrackingRoutes from "./routes/periodTrackingRoutes.js";
+import periodTrackingRoutes from "./routes/periodTrackingRoutes.js";
 // import postRoutes from "./routes/postRoutes.js";
 dotenv.config();
 export const MONGO_URL = process.env.MONGO_URL;
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.send("Shesync api is running");
 });
 app.use("/api/user", authRoutes);
-// app.use("/api/period", periodTrackingRoutes);
+app.use("/api/period", periodTrackingRoutes);
 // app.use("/api/post", postRoutes);
 
 const PORT = process.env.PORT || 3000;
