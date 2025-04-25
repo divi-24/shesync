@@ -741,7 +741,16 @@ export function Forum() {
               label="Home"
               onClick={() => navigate("/")}
             />
-            
+            <SidebarLink
+              icon={<GraduationCap size={20} />}
+              label="Education"
+              onClick={() => navigate("/blogs")}
+            />
+            <SidebarLink
+              icon={<ShoppingBag size={20} />}
+              label="Shop"
+              onClick={() => navigate("/Ecom")}
+            />
             <SidebarLink
               icon={<ActivitySquare size={20} />}
               label="Track Your Health"
@@ -767,14 +776,25 @@ export function Forum() {
               label="HealthLens"
               onClick={() => navigate("/symptomsanalyzer")}
             />
-      
+            
             <SidebarLink
               icon={<MessageSquare size={20} />}
               label="Forums"
               onClick={() => navigate("/forums")}
               active
             />
-          
+            
+              <SidebarLink
+                            icon={<Gamepad2 size={20} />}
+                            label="Bliss"
+                            onClick={() =>
+                              window.open(
+                                "http://localhost:5500/game-main/index.html","_self"
+                                
+                              )
+                            }
+                          />
+            
           </div>
       </aside>
 

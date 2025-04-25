@@ -62,7 +62,27 @@ import {
   Carrot,
   Beef,
   Candy,
-  Wine
+  Wine,
+  BarChart3,
+  LineChart as LineChartIcon,
+  PieChart as PieChartIcon,
+  Calendar as CalendarIcon,
+  Clock,
+  Thermometer,
+  Droplets as WaterIcon,
+  Pill as MedicineIcon,
+  Heart as HeartIcon,
+  Brain as MoodIcon,
+  Activity as ExerciseIcon,
+  Sun as EnergyIcon,
+  Moon as SleepIcon,
+  Utensils as FoodIcon,
+  AlertCircle as SymptomIcon,
+  TrendingUp,
+  ArrowUpCircle,
+  ArrowDownCircle,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 import axios from "axios";
 import { PrivacyForm } from "./PrivacyForm";
@@ -115,6 +135,23 @@ const nutritionTracking = {
   ]
 };
 
+// Add new constants for tracking
+const symptomCategories = {
+  physical: ["Cramps", "Headache", "Bloating", "Breast Tenderness", "Fatigue", "Back Pain"],
+  emotional: ["Anxiety", "Mood Swings", "Irritability", "Depression", "Stress"],
+  digestive: ["Nausea", "Appetite Changes", "Constipation", "Diarrhea"],
+  skin: ["Acne", "Skin Changes", "Oily Skin", "Dry Skin"],
+  sleep: ["Insomnia", "Oversleeping", "Disturbed Sleep", "Night Sweats"]
+};
+
+const moodTypes = {
+  positive: ["Happy", "Energetic", "Calm", "Focused", "Confident"],
+  neutral: ["Normal", "Stable", "Indifferent"],
+  negative: ["Anxious", "Irritable", "Sad", "Stressed", "Overwhelmed"]
+};
+
+const energyLevels = ["Very Low", "Low", "Moderate", "High", "Very High"];
+
 export function Dashboard() {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
@@ -143,6 +180,16 @@ export function Dashboard() {
   const [showPhaseInfo, setShowPhaseInfo] = useState(false);
   const [showNutritionLog, setShowNutritionLog] = useState(false);
   const [currentPhaseData, setCurrentPhaseData] = useState(null);
+  const [selectedTimeframe, setSelectedTimeframe] = useState("week");
+  const [symptomHistory, setSymptomHistory] = useState([]);
+  const [moodHistory, setMoodHistory] = useState([]);
+  const [energyHistory, setEnergyHistory] = useState([]);
+  const [medicationLog, setMedicationLog] = useState([]);
+  const [sleepQualityHistory, setSleepQualityHistory] = useState([]);
+  const [showDetailedStats, setShowDetailedStats] = useState(false);
+  const [activeSymptomCategory, setActiveSymptomCategory] = useState("physical");
+  const [showSymptomModal, setShowSymptomModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   // Define getCurrentPhase function before using it in useEffect
   const getCurrentPhase = (day) => {
@@ -172,6 +219,28 @@ export function Dashboard() {
       setCurrentPhaseData(cyclePhases[currentPhase.toLowerCase()]);
     }
   }, [cycleDay]);
+
+  // Add new useEffect for loading historical data
+  useEffect(() => {
+    if (periodData) {
+      // Initialize histories with any existing data
+      if (periodData.symptomHistory) {
+        setSymptomHistory(periodData.symptomHistory);
+      }
+      if (periodData.moodHistory) {
+        setMoodHistory(periodData.moodHistory);
+      }
+      if (periodData.energyHistory) {
+        setEnergyHistory(periodData.energyHistory);
+      }
+      if (periodData.medicationLog) {
+        setMedicationLog(periodData.medicationLog);
+      }
+      if (periodData.sleepQualityHistory) {
+        setSleepQualityHistory(periodData.sleepQualityHistory);
+      }
+    }
+  }, [periodData]);
 
   const fallbackData = {
     cycleDuration: 28,
@@ -373,6 +442,37 @@ export function Dashboard() {
     setShowMythModal(true);
   };
 
+  // Add new helper functions
+  const getSymptomFrequency = () => {
+    return symptomHistory.reduce((acc, record) => {
+      record.symptoms.forEach(symptom => {
+        acc[symptom] = (acc[symptom] || 0) + 1;
+      });
+      return acc;
+    }, {});
+  };
+
+  const getMoodTrend = () => {
+    const recentMoods = moodHistory.slice(-7);
+    const positiveCount = recentMoods.filter(mood => 
+      moodTypes.positive.includes(mood.type)
+    ).length;
+    const negativeCount = recentMoods.filter(mood => 
+      moodTypes.negative.includes(mood.type)
+    ).length;
+    
+    return {
+      trend: positiveCount > negativeCount ? "improving" : "declining",
+      positivePercentage: (positiveCount / recentMoods.length) * 100
+    };
+  };
+
+  const getAverageSleepQuality = () => {
+    if (!sleepQualityHistory.length) return "No Data";
+    const sum = sleepQualityHistory.reduce((acc, record) => acc + record.quality, 0);
+    return (sum / sleepQualityHistory.length).toFixed(1);
+  };
+
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -516,6 +616,214 @@ export function Dashboard() {
     </Card>
   );
 
+  const SymptomTracker = () => (
+    <Card className="mb-6">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="font-semibold">Symptom Tracker</h3>
+        <button
+          onClick={() => setShowSymptomModal(true)}
+          className="text-pink-500 hover:text-pink-600"
+        >
+          + Add Symptoms
+        </button>
+      </div>
+      <div className="space-y-4">
+        <div className="flex space-x-2 overflow-x-auto pb-2">
+          {Object.keys(symptomCategories).map(category => (
+            <button
+              key={category}
+              onClick={() => setActiveSymptomCategory(category)}
+              className={`px-3 py-1 rounded-full text-sm ${
+                activeSymptomCategory === category
+                  ? "bg-pink-500 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {symptomCategories[activeSymptomCategory].map(symptom => (
+            <div
+              key={symptom}
+              className={`p-3 rounded-lg border ${
+                selectedSymptoms.includes(symptom)
+                  ? "border-pink-500 bg-pink-50"
+                  : "border-gray-200 hover:border-pink-300"
+              }`}
+              onClick={() => handleSymptomToggle(symptom)}
+            >
+              <div className="flex items-center space-x-2">
+                <SymptomIcon className="h-4 w-4 text-pink-500" />
+                <span className="text-sm">{symptom}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Card>
+  );
+
+  const MoodEnergyTracker = () => {
+    const moodTrend = getMoodTrend();
+    
+    return (
+      <Card className="mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="font-semibold mb-4">Mood Tracking</h3>
+            <div className="space-y-3">
+              {Object.entries(moodTypes).map(([category, moods]) => (
+                <div key={category}>
+                  <h4 className="text-sm text-gray-500 mb-2">{category.toUpperCase()}</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {moods.map(mood => (
+                      <button
+                        key={mood}
+                        onClick={() => setMoodHistory(prev => [...prev, { type: mood, date: new Date() }])}
+                        className="px-3 py-1 rounded-full text-sm bg-gray-100 hover:bg-gray-200"
+                      >
+                        {mood}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-4">Energy Level</h3>
+            <div className="space-y-2">
+              {energyLevels.map(level => (
+                <button
+                  key={level}
+                  onClick={() => setEnergyHistory(prev => [...prev, { level, date: new Date() }])}
+                  className="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-100 flex items-center justify-between"
+                >
+                  <span>{level}</span>
+                  <EnergyIcon className="h-4 w-4 text-yellow-500" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Card>
+    );
+  };
+
+  const CycleInsights = () => {
+    const daysUntilNextPeriod = periodData.cycleDuration - cycleDay;
+    
+    return (
+      <Card className="mb-6">
+        <h3 className="font-semibold mb-4">Cycle Insights</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 bg-pink-50 rounded-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-600">Current Phase</span>
+              <CalendarIcon className="h-5 w-5 text-pink-500" />
+            </div>
+            <p className="text-lg font-semibold">{currentPhaseData?.name || "Loading..."}</p>
+          </div>
+          <div className="p-4 bg-purple-50 rounded-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-600">Days Until Next Period</span>
+              <Clock className="h-5 w-5 text-purple-500" />
+            </div>
+            <p className="text-lg font-semibold">{daysUntilNextPeriod} days</p>
+          </div>
+          <div className="p-4 bg-blue-50 rounded-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-600">Cycle Length</span>
+              <TrendingUp className="h-5 w-5 text-blue-500" />
+            </div>
+            <p className="text-lg font-semibold">{periodData.cycleDuration} days</p>
+          </div>
+        </div>
+      </Card>
+    );
+  };
+
+  const HealthStats = () => (
+    <Card className="mb-6">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="font-semibold">Health Statistics</h3>
+        <button
+          onClick={() => setShowDetailedStats(!showDetailedStats)}
+          className="text-pink-500 hover:text-pink-600"
+        >
+          {showDetailedStats ? "Show Less" : "Show More"}
+        </button>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard
+          title="Sleep Quality"
+          value={getAverageSleepQuality()}
+          icon={<SleepIcon className="h-5 w-5 text-indigo-500" />}
+        />
+        <StatCard
+          title="Water Intake"
+          value={`${waterIntake}/8`}
+          icon={<WaterIcon className="h-5 w-5 text-blue-500" />}
+        />
+        <StatCard
+          title="Mood Trend"
+          value={getMoodTrend().trend}
+          icon={<MoodIcon className="h-5 w-5 text-yellow-500" />}
+        />
+        <StatCard
+          title="Active Symptoms"
+          value={selectedSymptoms.length}
+          icon={<SymptomIcon className="h-5 w-5 text-red-500" />}
+        />
+      </div>
+      {showDetailedStats && (
+        <div className="mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="text-sm font-semibold mb-3">Symptom Frequency</h4>
+              {Object.entries(getSymptomFrequency()).map(([symptom, count]) => (
+                <div key={symptom} className="flex items-center justify-between mb-2">
+                  <span className="text-sm">{symptom}</span>
+                  <div className="w-32 bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-pink-500 rounded-full h-2"
+                      style={{ width: `${(count / symptomHistory.length) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold mb-3">Recent Medications</h4>
+              {medicationLog.slice(-5).map((med, index) => (
+                <div key={index} className="flex items-center space-x-2 mb-2">
+                  <MedicineIcon className="h-4 w-4 text-gray-400" />
+                  <span className="text-sm">{med.name}</span>
+                  <span className="text-xs text-gray-500">
+                    {new Date(med.date).toLocaleDateString()}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </Card>
+  );
+
+  // Add StatCard component
+  const StatCard = ({ title, value, icon }) => (
+    <div className="p-4 bg-gray-50 rounded-lg">
+      <div className="flex items-center justify-between mb-2">
+        {icon}
+        <span className="text-sm text-gray-600">{title}</span>
+      </div>
+      <p className="text-lg font-semibold">{value}</p>
+    </div>
+  );
+
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
       <style jsx global>{`
@@ -608,7 +916,16 @@ export function Dashboard() {
               label="Home"
               onClick={() => navigate("/")}
             />
-            
+            <NavItem
+              icon={<GraduationCap size={20} />}
+              label="Education"
+              onClick={() => navigate("/blogs")}
+            />
+            <NavItem
+              icon={<ShoppingBag size={20} />}
+              label="Shop"
+              onClick={() => navigate("/Ecom")}
+            />
             <NavItem
               icon={<ActivitySquare size={20} />}
               label="Track Your Health"
@@ -634,16 +951,22 @@ export function Dashboard() {
               label="HealthLens"
               onClick={() => navigate("/symptomsanalyzer")}
             />
-            <NavItem
-              icon={<AppWindowMac size={20} />}
-              label="Parent'sDashboard"
-              onClick={() => navigate("/parents")}
-            />
+            
             <NavItem
               icon={<MessageSquare size={20} />}
               label="Forums"
               onClick={() => navigate("/forums")}
             />
+            <NavItem
+                            icon={<Gamepad2 size={20} />}
+                            label="Bliss"
+                            onClick={() =>
+                              window.open(
+                                "http://localhost:5500/game-main/index.html","_self"
+                                
+                              )
+                            }
+                          />
             
           </nav>
         </div>
@@ -666,8 +989,8 @@ export function Dashboard() {
         </div>
       </aside>
 
-      <main className="flex-1 overflow-auto bg-[rgb(var(--background))] transition-all duration-300 ease-in-out ">
-        <div className="max-w-6xl mx-auto space-y-6">
+      <main className="flex-1 overflow-auto bg-[rgb(var(--background))] transition-all duration-300 ease-in-out">
+        <div className="max-w-6xl mx-auto p-6 space-y-6">
           {error && (
             <div
               className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4"
@@ -973,6 +1296,11 @@ export function Dashboard() {
               </div>
             </Card>
           )}
+
+          <CycleInsights />
+          <HealthStats />
+          <SymptomTracker />
+          <MoodEnergyTracker />
         </div>
       </main>
 
@@ -993,6 +1321,34 @@ export function Dashboard() {
             >
               Close
             </button>
+          </div>
+        </div>
+      )}
+
+      {showSymptomModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="font-semibold mb-4">Log Symptoms</h3>
+            <div className="space-y-4">
+              {/* Add symptom logging form */}
+            </div>
+            <div className="mt-6 flex justify-end space-x-3">
+              <button
+                onClick={() => setShowSymptomModal(false)}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  // Handle symptom logging
+                  setShowSymptomModal(false);
+                }}
+                className="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600"
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
       )}

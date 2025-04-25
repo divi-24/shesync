@@ -87,7 +87,16 @@ export function Landing() {
             onClick={() => navigate("/")}
             active
           />
-          
+          <SidebarLink
+            icon={<GraduationCap size={20} />}
+            label="Education"
+            onClick={() => navigate("/blogs")}
+          />
+          <SidebarLink
+            icon={<ShoppingBag size={20} />}
+            label="Shop"
+            onClick={() => navigate("/Ecom")}
+          />
           <SidebarLink
             icon={<ActivitySquare size={20} />}
             label="Track Your Health"
@@ -119,6 +128,16 @@ export function Landing() {
             label="Forums"
             onClick={() => navigate("/forums")}
           />
+            <SidebarLink
+                            icon={<Gamepad2 size={20} />}
+                            label="Bliss"
+                            onClick={() =>
+                              window.open(
+                                "http://localhost:5500/game-main/index.html","_self"
+                                
+                              )
+                            }
+                          />
           
         </div>
       </aside>
@@ -286,21 +305,7 @@ export function Landing() {
                   className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
                   
                 >
-                  Parent's Dashboard
-                </h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 ">
-                  Stay informed with cycle updates, mood tracking, and AI
-                  alerts— supporting your child without compromising their
-                  privacy.
-                </p>
-              </div>
-
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <HeartPulse className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/symptomsanalyzer")}/>
-                <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300 ..."
                   
-                >
                   Health Lens
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
@@ -334,43 +339,7 @@ export function Landing() {
                   A tool to help you diagnose PCOS and get personalized advice.
                 </p>
               </div>
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <Handshake className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() =>
-              window.open(
-                "https://www.hercircle.in/engage/wellness/reproductive-health/5-organisations-working-towards-eradicating-period-poverty-2239.html",
-                "_blank"
-              )
-            }/>
-                <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                  
-                >
-                  NGO's
-                </h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                  Discover and connect with NGOs dedicated to women's health,
-                  empowerment, and well-being. Together, we can build a
-                  supportive community for women everywhere.
-                </p>
-              </div>
-              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                <HeartHandshake className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => 
-              window.open(
-                "https://thepadproject.org/donate/"
-                )  
-              }/>
-                <h4
-                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                  
-                >
-                  ShareJoy
-                </h4>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                  Make a difference by donating sanitary pads through our
-                  curated platform, ensuring access to menstrual hygiene for
-                  those in need. Sharing joy starts here!
-                </p>
-              </div>
+              
             </div>
           </Card>
           {/* Team Members Card */}
