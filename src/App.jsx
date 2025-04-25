@@ -8,9 +8,13 @@ import {
 
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
+import { Landing } from "./components/Landing";
 
 const router = createBrowserRouter([
-  
+  {
+    path: "/",
+    element: <Landing />,
+  },
   {
     path: "/Signup",
     element: <Signup />,
