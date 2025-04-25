@@ -93,6 +93,18 @@ export function Landing() {
             label="Track Your Health"
             onClick={() => navigate("/tracker")}
           />
+          <SidebarLink
+                        icon={<Bot size={20} />}
+                        label="Eve"
+                        onClick={() => navigate("/ChatBot")}
+                        
+                      />
+                      <SidebarLink
+                                  icon={<ClipboardList size={20} />}
+                                  label="PCOS Diagnosis"
+                                  onClick={() => navigate("/partner")}
+                                  
+                                />
           
         </div>
       </aside>

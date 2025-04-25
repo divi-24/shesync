@@ -399,6 +399,19 @@ export function Dashboard() {
               label="Track Your Health"
               onClick={() => navigate("/tracker")}
             />
+            <NavItem
+                          icon={<Bot size={20} />}
+                          label="Eve"
+                          onClick={() => navigate("/ChatBot")}
+                          
+                        />
+                        <NavItem
+                                    icon={<ClipboardList size={20} />}
+                                    label="PCOS Diagnosis"
+                                    onClick={() => navigate("/partner")}
+                                    
+                                  />
+                        
            
           </nav>
         </div>

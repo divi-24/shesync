@@ -413,6 +413,19 @@ export function PeriodTracker() {
             onClick={() => navigate("/tracker")}
             active
           />
+          <SidebarLink
+                        icon={<Bot size={20} />}
+                        label="Eve"
+                        onClick={() => navigate("/ChatBot")}
+                        
+                      />
+                      <SidebarLink
+                                  icon={<ClipboardList size={20} />}
+                                  label="PCOS Diagnosis"
+                                  onClick={() => navigate("/partner")}
+                                  
+                                />
+                      
                              
         </div>
       </aside>

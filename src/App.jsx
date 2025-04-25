@@ -11,11 +11,21 @@ import { Dashboard } from "./components/Dashboard";
 import { Login } from "./components/Login";
 import { Landing } from "./components/Landing";
 import { PeriodTracker } from "./components/PeriodTracker";
+import { Chatbot } from "./components/Chatbot";
+import { Diagnosis } from "./components/PartnerDashboard";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+  },
+  {
+    path: "/partner",
+    element: <Diagnosis />,
+  },
+  {
+    path: "/ChatBot",
+    element: <Chatbot />,
   },
   {
     path: "/Dashboard",
