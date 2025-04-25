@@ -1053,27 +1053,38 @@ Risk Level: [Low/Moderate/High]
           />
           
           <SidebarLink
-            icon={<ShoppingBag size={20} />}
-            label="Shop"
-            onClick={() => navigate("/Ecom")}
-          />
-          <SidebarLink
             icon={<ActivitySquare size={20} />}
             label="Track Your Health"
             onClick={() => navigate("/tracker")}
           />
-          
+                    <SidebarLink
+            icon={<ClipboardList size={20} />}
+            label="PCOS Diagnosis"
+            onClick={() => navigate("/partner")}
+            active
+          />
+          <SidebarLink
+            icon={<Stethoscope size={20} />}
+            label="Expert Consultation"
+            onClick={() => navigate("/consultations")}
+          />
           <SidebarLink
             icon={<Bot size={20} />}
             label="Eve"
             onClick={() => navigate("/ChatBot")}
           />
           <SidebarLink
-            icon={<ClipboardList size={20} />}
-            label="PCOS Diagnosis"
-            onClick={() => navigate("/partner")}
-            active
+            icon={<HeartPulse size={20} />}
+            label="HealthLens"
+            onClick={() => navigate("/symptomsanalyzer")}
           />
+          
+          <SidebarLink
+            icon={<MessageSquare size={20} />}
+            label="Forums"
+            onClick={() => navigate("/forums")}
+          />
+          
         </div>
       </aside>
 

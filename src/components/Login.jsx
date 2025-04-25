@@ -139,7 +139,26 @@ export function Login() {
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <div className="rounded-md shadow-sm -space-y-px">
-            
+            {/* <div>
+              <label htmlFor="Parent email-address" className="sr-only">
+                enter your Parent Email address
+              </label>
+              <input
+                id="Parent email-address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border 
+                                border-gray-300 dark:border-gray-600 
+                                text-gray-900 dark:text-white 
+                                placeholder-gray-500 dark:placeholder-gray-400 
+                                bg-white dark:bg-gray-700 
+                                focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 
+                                sm:text-sm transition-colors duration-200"
+                placeholder="Enter your parents Email address"
+              />
+            </div> */}
             <div> 
               <label htmlFor="email-address" className="sr-only">
                 Email address

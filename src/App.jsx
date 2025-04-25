@@ -5,13 +5,19 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-
-import { Signup } from "./components/Signup";
-import { Dashboard } from "./components/Dashboard";
-import { Login } from "./components/Login";
 import { Landing } from "./components/Landing";
+import { Forum } from "./components/Forum";
+import { Blogs } from "./components/Blogs";
+import { Consultations } from "./components/Consultations";
+import { Signup } from "./components/Signup";
+import { Login } from "./components/Login";
 import { PeriodTracker } from "./components/PeriodTracker";
+import { Ecom } from "./components/Ecom";
 import { Chatbot } from "./components/Chatbot";
+import { Dashboard } from "./components/Dashboard";
+import { ModernTeamShowcase } from "./components/ModernTeamShowcase";
+import { SymptomAnalysis } from "./components/SymptomAnalysis";
+import { ParentDashboard } from "./components/ParentDashboard";
 import { Diagnosis } from "./components/PartnerDashboard";
 
 const router = createBrowserRouter([
@@ -20,8 +26,32 @@ const router = createBrowserRouter([
     element: <Landing />,
   },
   {
-    path: "/partner",
-    element: <Diagnosis />,
+    path: "/forums",
+    element: <Forum />,
+  },
+  {
+    path: "/blogs",
+    element: <Blogs />,
+  },
+  {
+    path: "/consultations",
+    element: <Consultations />,
+  },
+  {
+    path: "/tracker",
+    element: <PeriodTracker />,
+  },
+  {
+    path: "/Ecom",
+    element: <Ecom />,
+  },
+  {
+    path: "/Signup",
+    element: <Signup />,
+  },
+  {
+    path: "/Login",
+    element: <Login />,
   },
   {
     path: "/ChatBot",
@@ -32,16 +62,20 @@ const router = createBrowserRouter([
     element: <Dashboard />,
   },
   {
-    path: "/tracker",
-    element: <PeriodTracker />,
+    path: "/team",
+    element: <ModernTeamShowcase />,
   },
   {
-    path: "/Signup",
-    element: <Signup />,
+    path: "/symptomsanalyzer",
+    element: <SymptomAnalysis />,
   },
   {
-    path: "/Login",
-    element: <Login />,
+    path: "/parents",
+    element: <ParentDashboard />,
+  },
+  {
+    path: "/partner",
+    element: <Diagnosis />,
   },
 ]);
 

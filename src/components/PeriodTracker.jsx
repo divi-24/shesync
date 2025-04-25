@@ -413,20 +413,33 @@ export function PeriodTracker() {
             onClick={() => navigate("/tracker")}
             active
           />
+                              <SidebarLink
+                                                    icon={<ClipboardList size={20} />}
+                                                    label="PCOS Diagnosis"
+                                                    onClick={() => navigate("/partner")}
+                                                  />
           <SidebarLink
-                        icon={<Bot size={20} />}
-                        label="Eve"
-                        onClick={() => navigate("/ChatBot")}
-                        
-                      />
-                      <SidebarLink
-                                  icon={<ClipboardList size={20} />}
-                                  label="PCOS Diagnosis"
-                                  onClick={() => navigate("/partner")}
-                                  
-                                />
-                      
-                             
+            icon={<Stethoscope size={20} />}
+            label="Expert Consultation"
+            onClick={() => navigate("/consultations")}
+          />
+          <SidebarLink
+            icon={<Bot size={20} />}
+            label="Eve"
+            onClick={() => navigate("/ChatBot")}
+          />
+          <SidebarLink
+            icon={<HeartPulse size={20} />}
+            label="HealthLens"
+            onClick={() => navigate("/symptomsanalyzer")}
+          />
+          
+          <SidebarLink
+            icon={<MessageSquare size={20} />}
+            label="Forums"
+            onClick={() => navigate("/forums")}
+          />
+          
         </div>
       </aside>
 

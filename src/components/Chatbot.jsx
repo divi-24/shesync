@@ -28,14 +28,90 @@ import {
   MessageCircle,
   HeartHandshake,
   Handshake,
-  ChevronRight
+  ChevronRight,
+  Calendar,
+  Droplet,
+  Thermometer,
+  Pill,
+  Heart,
+  Brain,
+  Scale,
+  Bell,
+  AlertCircle,
+  Book,
+  Clock,
+  TrendingUp,
+  Shield,
+  Info
 } from "lucide-react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-const genAI = new GoogleGenerativeAI("AIzaSyDC_nwnZggf8CYID3qvJfazEE8KBnqd9Ro");
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const healthEmojis = [
+  "❤️", "💪", "🌸", "🌺", "🌷", "🌼", "💕", "💖", "💗", "💓",
+  "💞", "💝", "💟", "🩸", "🩹", "💊", "🌡️", "⚕️", "🏥", "💉"
+];
+
+const healthTopics = [
+  { 
+    icon: <Calendar size={20} />, 
+    label: "Period Tracking", 
+    prompt: "Help me track my menstrual cycle and predict my next period",
+    category: "tracking"
+  },
+  { 
+    icon: <Droplet size={20} />, 
+    label: "Flow Analysis", 
+    prompt: "Analyze my menstrual flow patterns and what they indicate",
+    category: "analysis"
+  },
+  { 
+    icon: <Thermometer size={20} />, 
+    label: "Symptom Tracker", 
+    prompt: "Track and analyze my menstrual symptoms",
+    category: "tracking"
+  },
+  { 
+    icon: <Pill size={20} />, 
+    label: "Medication Guide", 
+    prompt: "What medications are safe during menstruation and how to manage pain?",
+    category: "health"
+  },
+  { 
+    icon: <Heart size={20} />, 
+    label: "Reproductive Health", 
+    prompt: "Tell me about maintaining good reproductive health",
+    category: "health"
+  },
+  { 
+    icon: <Brain size={20} />, 
+    label: "Mental Wellness", 
+    prompt: "How to manage PMS and maintain mental health during periods?",
+    category: "wellness"
+  },
+  { 
+    icon: <Scale size={20} />, 
+    label: "Nutrition Guide", 
+    prompt: "What foods help with menstrual health and reduce symptoms?",
+    category: "wellness"
+  },
+  { 
+    icon: <Activity size={20} />, 
+    label: "Exercise Tips", 
+    prompt: "What exercises are beneficial during different phases of my cycle?",
+    category: "wellness"
+  },
+  { 
+    icon: <Shield size={20} />, 
+    label: "Hygiene Tips", 
+    prompt: "Best practices for menstrual hygiene and product safety",
+    category: "health"
+  }
+];
 
 const popularEmojis = [
   "😊",
@@ -60,6 +136,11 @@ const popularEmojis = [
   "💪",
 ];
 
+const symptomOptions = [
+  "Cramps", "Headache", "Fatigue", "Mood Swings", "Bloating",
+  "Acne", "Back Pain", "Breast Tenderness", "Nausea", "Insomnia"
+];
+
 export function Chatbot() {
   const [sidebarVisible, setSidebarVisible] = useState(true);
   const navigate = useNavigate();
@@ -68,6 +149,13 @@ export function Chatbot() {
   const [isTyping, setIsTyping] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showSymptomTracker, setShowSymptomTracker] = useState(false);
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  const [cycleData, setCycleData] = useState({
+    lastPeriod: "",
+    cycleLength: 28,
+    periodLength: 5
+  });
   const inputRef = useRef(null);
   const messagesEndRef = useRef(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -161,6 +249,44 @@ export function Chatbot() {
         { role: "user", content: `Uploaded file: ${file.name}` },
       ]);
     }
+  };
+
+  const handleTopicClick = (prompt) => {
+    setInput(prompt);
+    inputRef.current?.focus();
+  };
+
+  const handleSymptomToggle = (symptom) => {
+    setSelectedSymptoms(prev => 
+      prev.includes(symptom) 
+        ? prev.filter(s => s !== symptom)
+        : [...prev, symptom]
+    );
+  };
+
+  const handleCycleUpdate = (field, value) => {
+    setCycleData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const predictNextPeriod = () => {
+    if (!cycleData.lastPeriod) return "Please set your last period date";
+    const lastPeriodDate = new Date(cycleData.lastPeriod);
+    const nextPeriodDate = new Date(lastPeriodDate);
+    nextPeriodDate.setDate(nextPeriodDate.getDate() + cycleData.cycleLength);
+    return nextPeriodDate.toLocaleDateString();
+  };
+
+  const getHealthTips = () => {
+    const tips = {
+      tracking: "Track your symptoms daily for better cycle understanding",
+      analysis: "Analyze your patterns to identify any irregularities",
+      wellness: "Practice self-care and maintain a balanced lifestyle",
+      health: "Stay hydrated and maintain proper hygiene"
+    };
+    return tips;
   };
 
   useEffect(() => {
@@ -307,7 +433,7 @@ export function Chatbot() {
       <aside className="bg-pink-100 w-64 p-4 border-r border-[var(--fc-accent)]">
           <div className="px-4 py-4 flex flex-col space-y-2">
             <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 mb-4">
-              SheSync
+              SheSync Health
             </h1>
             <SidebarLink
               icon={<LayoutDashboard size={20} />}
@@ -325,7 +451,16 @@ export function Chatbot() {
               label="Track Your Health"
               onClick={() => navigate("/tracker")}
             />
-           
+            <SidebarLink
+                                  icon={<ClipboardList size={20} />}
+                                  label="PCOS Diagnosis"
+                                  onClick={() => navigate("/partner")}
+                                />
+            <SidebarLink
+              icon={<Stethoscope size={20} />}
+              label="Expert Consultation"
+              onClick={() => navigate("/consultations")}
+            />
             <SidebarLink
               icon={<Bot size={20} />}
               label="Eve"
@@ -333,11 +468,16 @@ export function Chatbot() {
               active
             />
             <SidebarLink
-                        icon={<ClipboardList size={20} />}
-                        label="PCOS Diagnosis"
-                        onClick={() => navigate("/partner")}
-                        
-                      />
+              icon={<HeartPulse size={20} />}
+              label="HealthLens"
+              onClick={() => navigate("/symptomsanalyzer")}
+            />
+            
+            <SidebarLink
+              icon={<MessageSquare size={20} />}
+              label="Forums"
+              onClick={() => navigate("/forums")}
+            />
             
           </div>
       </aside>
@@ -361,12 +501,15 @@ export function Chatbot() {
       
       <div className="flex-1 flex flex-col bg-[var(--fc-bg-primary)] transition-colors duration-200  ">
         <div className="flex items-center justify-between p-4 bg-[var(--fc-accent)] shadow-md">
-          <h2
-            style={{ fontFamily: "sans-serif" }}
-            className="text-2xl font-bold text-pink-600"
-          >
-            SheSync Chatbot
-          </h2>
+          <div className="flex items-center space-x-4">
+            <h2 className="text-2xl font-bold text-pink-600">
+              SheSync Health Assistant
+            </h2>
+            <div className="flex items-center space-x-2 text-sm text-pink-700">
+              <Bell size={16} />
+              <span>Next Period: {predictNextPeriod()}</span>
+            </div>
+          </div>
           <div className="flex space-x-3">
             <button
               onClick={toggleDarkMode}
@@ -397,6 +540,67 @@ export function Chatbot() {
             </button>
           </div>
         </div>
+
+        {/* Health Dashboard */}
+        <div className="p-4 bg-white dark:bg-gray-800 shadow-sm">
+          <div className="grid grid-cols-3 gap-4 mb-4">
+            <div className="p-4 bg-pink-50 dark:bg-pink-900 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <Calendar size={20} />
+                <span>Cycle Day: {cycleData.periodLength}</span>
+              </div>
+            </div>
+            <div className="p-4 bg-pink-50 dark:bg-pink-900 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <TrendingUp size={20} />
+                <span>Cycle Length: {cycleData.cycleLength} days</span>
+              </div>
+            </div>
+            <div className="p-4 bg-pink-50 dark:bg-pink-900 rounded-lg">
+              <div className="flex items-center space-x-2">
+                <Info size={20} />
+                <span>Phase: {cycleData.periodLength <= 5 ? "Menstrual" : "Follicular"}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Health Topics Quick Access */}
+          <div className="grid grid-cols-9 gap-2">
+            {healthTopics.map((topic, index) => (
+              <button
+                key={index}
+                onClick={() => handleTopicClick(topic.prompt)}
+                className="flex flex-col items-center p-2 rounded-lg hover:bg-pink-100 dark:hover:bg-pink-900 transition-colors"
+              >
+                {topic.icon}
+                <span className="text-xs mt-1 text-center">{topic.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Symptom Tracker */}
+        {showSymptomTracker && (
+          <div className="p-4 bg-white dark:bg-gray-800 shadow-sm">
+            <h3 className="text-lg font-semibold mb-2">Track Your Symptoms</h3>
+            <div className="grid grid-cols-5 gap-2">
+              {symptomOptions.map((symptom, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleSymptomToggle(symptom)}
+                  className={`p-2 rounded-lg ${
+                    selectedSymptoms.includes(symptom)
+                      ? "bg-pink-500 text-white"
+                      : "bg-pink-100 dark:bg-pink-900"
+                  }`}
+                >
+                  {symptom}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-[var(--fc-accent)] scrollbar-track-[var(--fc-bg-secondary)]">
           {messages.map((message, index) => (
             <div
@@ -470,7 +674,7 @@ export function Chatbot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Type your message..."
+              placeholder="Ask about menstrual health, track symptoms, or get personalized advice..."
               className="flex-grow p-3 rounded-lg bg-[var(--fc-input-bg)] text-[var(--fc-input-text)] placeholder-[var(--fc-text-secondary)] border border-[var(--fc-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--fc-accent-dark)]"
             />
             <input
@@ -504,7 +708,7 @@ export function Chatbot() {
           {showEmojiPicker && (
             <div className="mt-2 p-2 bg-[var(--fc-bg-secondary)] border border-[var(--fc-accent)] rounded-lg">
               <div className="emoji-grid">
-                {popularEmojis.map((emoji, index) => (
+                {healthEmojis.map((emoji, index) => (
                   <button
                     key={index}
                     onClick={() => addEmoji(emoji)}

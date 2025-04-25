@@ -96,5 +96,5 @@ const ToggleItem = ({ label, isOn, onToggle }) => (
   </div>
 );
 
-
+// export default PrivacyForm;
 

@@ -87,24 +87,38 @@ export function Landing() {
             onClick={() => navigate("/")}
             active
           />
-         
+          
           <SidebarLink
             icon={<ActivitySquare size={20} />}
             label="Track Your Health"
             onClick={() => navigate("/tracker")}
           />
           <SidebarLink
-                        icon={<Bot size={20} />}
-                        label="Eve"
-                        onClick={() => navigate("/ChatBot")}
-                        
-                      />
-                      <SidebarLink
-                                  icon={<ClipboardList size={20} />}
-                                  label="PCOS Diagnosis"
-                                  onClick={() => navigate("/partner")}
-                                  
-                                />
+                      icon={<ClipboardList size={20} />}
+                      label="PCOS Diagnosis"
+                      onClick={() => navigate("/partner")}
+                    />
+          <SidebarLink
+            icon={<Stethoscope size={20} />}
+            label="Expert Consultation"
+            onClick={() => navigate("/consultations")}
+          />
+          <SidebarLink
+            icon={<Bot size={20} />}
+            label="Eve"
+            onClick={() => navigate("/ChatBot")}
+          />
+          <SidebarLink
+            icon={<HeartPulse size={20} />}
+            label="HealthLens"
+            onClick={() => navigate("/symptomsanalyzer")}
+          />
+          
+          <SidebarLink
+            icon={<MessageSquare size={20} />}
+            label="Forums"
+            onClick={() => navigate("/forums")}
+          />
           
         </div>
       </aside>
@@ -216,82 +230,82 @@ export function Landing() {
                   className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
                 
                 >
-                Curated Shop
+                  Curated Shop
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                Discover eco-friendly products and redeem learning points for
-                sustainable choices.
+                  Discover eco-friendly products and redeem learning points for
+                  sustainable choices.
                 </p>
-            </div>
+              </div>
 
-            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <ActivitySquare className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/tracker")}/>
                 <h4
-                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
 
                 >
-                Health Tracker
+                  Health Tracker
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                Log cycles, symptoms, and moods to understand patterns and
-                gain actionable health insights.
+                  Log cycles, symptoms, and moods to understand patterns and
+                  gain actionable health insights.
                 </p>
-            </div>
+              </div>
 
-            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <Stethoscope className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/consultations")}/>
                 <h4
-                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
                 
                 >
-                Expert Consultations
+                  Expert Consultations
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                Access trusted health professionals for personalized advice
-                and timely support.
+                  Access trusted health professionals for personalized advice
+                  and timely support.
                 </p>
-            </div>
+              </div>
 
-            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <Bot className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/ChatBot")}/>
                 <h4
-                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                
+                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                  
                 >
-                Eve
+                  Eve
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                Get AI personalized insights, symptom analysis, and timely
-                reminders tailored to your unique menstrual health needs.
+                  Get AI personalized insights, symptom analysis, and timely
+                  reminders tailored to your unique menstrual health needs.
                 </p>
-            </div>
+              </div>
 
-            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg  ">
+              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg  ">
                 <UsersRound className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/dashboard")}/>
                 <h4
-                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                
+                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                  
                 >
-                Parent's Dashboard
+                  Parent's Dashboard
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2 ">
-                Stay informed with cycle updates, mood tracking, and AI
-                alerts— supporting your child without compromising their
-                privacy.
+                  Stay informed with cycle updates, mood tracking, and AI
+                  alerts— supporting your child without compromising their
+                  privacy.
                 </p>
-            </div>
+              </div>
 
-            <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+              <div className="flex flex-col items-start p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                 <HeartPulse className="h-8 w-8 text-pink-600 dark:text-pink-400 mb-4" onClick={() => navigate("/symptomsanalyzer")}/>
                 <h4
-                className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300 ..."
-                
+                  className="text-lg font-semibold text-pink-600 cursor-pointer  hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300 ..."
+                  
                 >
-                Health Lens
+                  Health Lens
                 </h4>
                 <p className="text-sm text-gray-700 dark:text-gray-300 mt-2">
-                An AI-powered tool to analyze symptoms, offer community
-                insights, and provide actionable health advice.
+                  An AI-powered tool to analyze symptoms, offer community
+                  insights, and provide actionable health advice.
                 </p>
               </div>
 
@@ -359,7 +373,126 @@ export function Landing() {
               </div>
             </div>
           </Card>
-         
+          {/* Team Members Card */}
+          {/*<Card className="my-8">
+            <div className="bg-gray-900 rounded-xl p-6 relative overflow-hidden group">
+              {/* Animated Background Pattern */}
+              {/*<div className="absolute inset-0 opacity-10">
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)",
+                    backgroundSize: "24px 24px",
+                  }}
+                ></div>
+              </div>
+
+              {/* Animated Gradient Overlay */}
+              {/*<div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-[length:200%_100%] animate-gradient"></div>
+
+              {/* Content */}
+              {/*<div className="relative z-10 space-y-6">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-2">
+                      Team WEB PIONEERS
+                    </h3>
+                  </div>
+                  <div className="bg-green-500/20 px-3 py-1 rounded-full flex items-center">
+                    <span className="text-green-400 text-sm font-medium">
+                      Active Project
+                    </span>
+                  </div>
+                </div>
+
+                {/* Team Stats Grid */}
+                {/*<div className="grid grid-cols-2 gap-4">
+                  <div className="bg-gray-800/50 rounded-lg p-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-gray-400 text-sm">Team Size</p>
+                        <p className="text-3xl font-bold text-white">04</p>
+                      </div>
+                      <div className="h-10 w-10 rounded-full bg-pink-500/20 flex items-center justify-center">
+                        <Users className="h-5 w-5 text-pink-400" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gray-800/50 rounded-lg p-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="text-gray-400 text-sm">Project Status</p>
+                        <p className="text-lg font-semibold text-white">
+                          In Development
+                        </p>
+                      </div>
+                      <div className="h-10 w-10 rounded-full bg-purple-500/20 flex items-center justify-center">
+                        <ActivitySquare className="h-5 w-5 text-purple-400" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Team Focus Areas */}
+                {/*<div className="bg-gray-800/50 rounded-lg p-4">
+                  <h4 className="text-gray-300 font-medium mb-3">
+                    Focus Areas
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 rounded-full bg-pink-500/20 text-pink-400 text-sm">
+                      Women's Health
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-sm">
+                      AI Integration
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-sm">
+                      Healthcare Tech
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm">
+                      Community Building
+                    </span>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                {/*<button
+                  onClick={() => navigate("/team")}
+                  className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white px-6 py-4 rounded-lg font-medium
+                           hover:from-pink-500 hover:to-purple-500 transition-all duration-300
+                           flex items-center justify-center space-x-2 group relative overflow-hidden"
+                >
+                  {/* Button Shine Effect */}
+                  {/*<div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                  </div>
+
+                  <div className="relative flex items-center space-x-2">
+                    <span className="text-l text-gray-700 dark:text-gray-200">
+                      Meet Our Team
+                    </span>
+                    <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </button>
+
+                {/* Bottom Stats */}
+                {/*<div className="pt-4 mt-4 border-t border-gray-800 grid grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4 text-gray-400" />
+                    <span className="text-gray-400 text-sm">
+                      Started: Mar 2025
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2 justify-end">
+                    <Heart className="h-4 w-4 text-gray-400" />
+                    <span className="text-gray-400 text-sm">
+                      Made with passion
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>*/}
           
           {/* Key Benefits Section */}
           <Card className=" hover:bg-pink-200  focus:outline-none focus:ring focus:ring-pink-300 dark:hover:bg-pink-500 ">
@@ -403,7 +536,29 @@ export function Landing() {
               maximize impact.
             </p>
           </Card>
-          
+          {/* How It Works Section */}
+        {/* <Card className=" hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300  dark:hover:bg-pink-500">
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
+              How SheSync Works
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <StepCard
+                number={1}
+                title="Sign Up"
+                description="Create your account and set up your profile with basic health information."
+              />
+              <StepCard
+                number={2}
+                title="Track Your Health"
+                description="Log your symptoms, cycle, and wellness data regularly for personalized insights."
+              />
+              <StepCard
+                number={3}
+                title="Get Insights"
+                description="Receive tailored recommendations and connect with experts for better health management."
+              />
+            </div>
+          </Card>*/}
           {/* Testimonials */}
           <Card className=" hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300  dark:hover:bg-pink-500">
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
@@ -420,7 +575,29 @@ export function Landing() {
               />
             </div>
           </Card>
-          
+          {/* Latest Blog Posts */}
+         {/* <Card className=" hover:bg-pink-200 active:bg-pink-700 focus:outline-none focus:ring focus:ring-pink-300  dark:hover:bg-pink-500">
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
+              Latest from Our Blog
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <BlogPostCard
+                title="Understanding Your Menstrual Cycle"
+                excerpt="Learn about the four phases of the menstrual cycle and how they affect your body and mood."
+                date="Jan 15, 2025"
+              />
+              <BlogPostCard
+                title="Nutrition Tips for Hormonal Balance"
+                excerpt="Discover the foods that can help regulate your hormones and improve your overall health."
+                date="Jan 10, 2025"
+              />
+              <BlogPostCard
+                title="Stress Management Techniques"
+                excerpt="Explore effective ways to manage stress and its impact on your menstrual health."
+                date="Jan 5, 2025"
+              />
+            </div>
+          </Card>*/}
           {/* Success Stories */}
           <Card className="bg-pink-800 text-white  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300  dark:hover:bg-pink-500">
             <h3 className="text-2xl font-semibold mb-6 text-pink-700 dark:text-gray-100">
@@ -528,7 +705,59 @@ export function Landing() {
               />
             </div>
           </Card>
-          
+          {/*App Features Showcase */}
+         {/* <Card className=" hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300  dark:hover:bg-pink-500">
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
+              App Features Showcase
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <AppFeatureCard
+                title="Cycle Prediction"
+                description="Our AI-powered algorithm learns from your data to provide accurate cycle predictions."
+                icon={
+                  <Calendar className="h-8 w-8 text-pink-600 dark:text-pink-400" />
+                }
+              />
+              <AppFeatureCard
+                title="Symptom Tracking"
+                description="Log and monitor various symptoms to gain insights into your health patterns."
+                icon={
+                  <ActivitySquare className="h-8 w-8 text-pink-600 dark:text-pink-400" />
+                }
+              />
+              <AppFeatureCard
+                title="Nutrition Guide"
+                description="Get personalized nutrition advice based on your cycle phase and health goals."
+                icon={
+                  <Utensils className="h-8 w-8 text-pink-600 dark:text-pink-400" />
+                }
+              />
+              <AppFeatureCard
+                title="Mood Tracking"
+                description="Track your emotional well-being and identify patterns related to your cycle."
+                icon={
+                  <Heart className="h-8 w-8 text-pink-600 dark:text-pink-400" />
+                }
+              />
+            </div>
+          </Card>*/}
+          {/* Partnerships */}
+        {/*  <Card className=" hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300  dark:hover:bg-pink-500">
+            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
+              Our Trusted Partners
+            </h3>
+            <p className="text-lg mb-6 text-gray-800 dark:text-gray-300">
+              We collaborate with leading healthcare providers, research
+              institutions, and wellness brands to bring you the best in Women's
+              health care.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <PartnerLogo name="HealthTech Inc." />
+              <PartnerLogo name="WomenWell Research" />
+              <PartnerLogo name="NutriBalance" />
+              <PartnerLogo name="MindfulHer" />
+            </div>
+          </Card>*/}
          
           {/* CTA */}
           <Card className=" dark:hover:bg-pink-500  hover:bg-pink-200 active:bg-pink-100 focus:outline-none focus:ring focus:ring-pink-300 ">

@@ -39,12 +39,81 @@ import {
   Unlock,
   AlertTriangle,
   AppWindowMac,
+  Pill,
+  Apple,
+  Bed,
+  Brain,
+  Droplets,
+  Activity,
+  Target,
+  LineChart,
+  BarChart,
+  PieChart,
+  Sparkles,
+  Flame,
+  Wind,
+  Waves,
+  Leaf,
+  Sandwich,
+  Salad,
+  Milk,
+  Egg,
+  Fish,
+  Carrot,
+  Beef,
+  Candy,
+  Wine
 } from "lucide-react";
 import axios from "axios";
 import { PrivacyForm } from "./PrivacyForm";
 
 const server_url = import.meta.env.VITE_SERVER_URL;
 const local_url = "http://localhost:3000/api/period/";
+
+const cyclePhases = {
+  menstrual: {
+    name: "Menstrual",
+    duration: [1, 5],
+    symptoms: ["Cramps", "Fatigue", "Headache"],
+    nutrition: ["Iron-rich foods", "Water", "Vitamin C"],
+    exercise: ["Light walking", "Yoga", "Stretching"],
+    mood: ["Rest", "Self-care", "Meditation"]
+  },
+  follicular: {
+    name: "Follicular",
+    duration: [6, 14],
+    symptoms: ["Energy increase", "Improved mood", "Higher motivation"],
+    nutrition: ["Protein-rich foods", "Antioxidants", "B vitamins"],
+    exercise: ["High-intensity workouts", "Strength training", "Cardio"],
+    mood: ["Goal setting", "New projects", "Social activities"]
+  },
+  ovulatory: {
+    name: "Ovulatory",
+    duration: [15, 17],
+    symptoms: ["Increased energy", "Enhanced mood", "Mild pain"],
+    nutrition: ["Zinc-rich foods", "Magnesium", "Fermented foods"],
+    exercise: ["Peak performance activities", "Team sports", "Dancing"],
+    mood: ["Communication", "Creativity", "Leadership"]
+  },
+  luteal: {
+    name: "Luteal",
+    duration: [18, 28],
+    symptoms: ["Bloating", "Mood changes", "Food cravings"],
+    nutrition: ["Complex carbs", "Calcium-rich foods", "Omega-3"],
+    exercise: ["Moderate intensity", "Swimming", "Pilates"],
+    mood: ["Organization", "Reflection", "Mindfulness"]
+  }
+};
+
+const nutritionTracking = {
+  categories: [
+    { name: "Proteins", icon: <Egg />, target: "50-60g" },
+    { name: "Iron", icon: <Beef />, target: "18mg" },
+    { name: "Calcium", icon: <Milk />, target: "1000mg" },
+    { name: "Vitamins", icon: <Carrot />, target: "varied" },
+    { name: "Water", icon: <Droplets />, target: "2-3L" }
+  ]
+};
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -58,6 +127,7 @@ export function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [cycleDay, setCycleDay] = useState(1);
   const [selectedData, setSelectedData] = useState({
     cycleInfo: true,
     moodData: true,
@@ -66,6 +136,42 @@ export function Dashboard() {
     wellnessData: true,
   });
   const [showPrivacyForm, setShowPrivacyForm] = useState(false);
+  const [nutritionLog, setNutritionLog] = useState([]);
+  const [exerciseLog, setExerciseLog] = useState([]);
+  const [moodIntensity, setMoodIntensity] = useState(5);
+  const [selectedSymptoms, setSelectedSymptoms] = useState([]);
+  const [showPhaseInfo, setShowPhaseInfo] = useState(false);
+  const [showNutritionLog, setShowNutritionLog] = useState(false);
+  const [currentPhaseData, setCurrentPhaseData] = useState(null);
+
+  // Define getCurrentPhase function before using it in useEffect
+  const getCurrentPhase = (day) => {
+    if (!day) return "menstrual";
+    if (day <= 5) return "menstrual";
+    if (day <= 14) return "follicular";
+    if (day <= 17) return "ovulatory";
+    return "luteal";
+  };
+
+  // Calculate cycle day whenever periodData changes
+  useEffect(() => {
+    if (periodData && periodData.lastPeriodStart) {
+      const daysSinceStart = Math.floor(
+        (new Date() - new Date(periodData.lastPeriodStart)) /
+        (1000 * 60 * 60 * 24)
+      );
+      const calculatedCycleDay = (daysSinceStart % (periodData.cycleDuration || 28)) + 1;
+      setCycleDay(calculatedCycleDay);
+    }
+  }, [periodData]);
+
+  // Update current phase data when cycle day changes
+  useEffect(() => {
+    if (cycleDay) {
+      const currentPhase = getCurrentPhase(cycleDay);
+      setCurrentPhaseData(cyclePhases[currentPhase.toLowerCase()]);
+    }
+  }, [cycleDay]);
 
   const fallbackData = {
     cycleDuration: 28,
@@ -268,20 +374,36 @@ export function Dashboard() {
   };
 
   if (loading) {
-    return <div>Fetching your Data...</div>;
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto mb-4"></div>
+          <p className="text-lg text-gray-600 dark:text-gray-300">Fetching your Data...</p>
+        </div>
+      </div>
+    );
   }
 
   if (!periodData) {
-    return <div>Sign/Sign in Required</div>;
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center p-8 max-w-md">
+          <AlertCircle className="h-12 w-12 text-pink-500 mx-auto mb-4" />
+          <h2 className="text-xl font-semibold mb-2">Sign in Required</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            Please sign in to access your personalized dashboard.
+          </p>
+          <button
+            onClick={() => navigate("/login")}
+            className="px-6 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  const cycleDay =
-    (Math.floor(
-      (new Date() - new Date(periodData.lastPeriodStart)) /
-        (1000 * 60 * 60 * 24)
-    ) %
-      periodData.cycleDuration) +
-    1;
   const daysUntilNextPeriod = periodData.cycleDuration - cycleDay;
   const fertileWindow = cycleDay >= 11 && cycleDay <= 17;
   const pmsLikely = periodData.currentPhase === "Luteal" && cycleDay > 21;
@@ -300,6 +422,99 @@ export function Dashboard() {
   };
 
   const healthTips = getHealthTips();
+
+  const getPersonalizedRecommendations = () => {
+    if (!currentPhaseData) return [];
+    
+    const recommendations = [
+      {
+        category: "Nutrition",
+        items: currentPhaseData.nutrition.map(item => ({
+          text: item,
+          icon: <Apple className="h-5 w-5 text-green-500" />
+        }))
+      },
+      {
+        category: "Exercise",
+        items: currentPhaseData.exercise.map(item => ({
+          text: item,
+          icon: <Activity className="h-5 w-5 text-blue-500" />
+        }))
+      },
+      {
+        category: "Mood Support",
+        items: currentPhaseData.mood.map(item => ({
+          text: item,
+          icon: <Brain className="h-5 w-5 text-purple-500" />
+        }))
+      }
+    ];
+    return recommendations;
+  };
+
+  const handleNutritionLog = (category, value) => {
+    setNutritionLog(prev => [...prev, { category, value, timestamp: new Date() }]);
+  };
+
+  const handleExerciseLog = (type, duration) => {
+    setExerciseLog(prev => [...prev, { type, duration, timestamp: new Date() }]);
+  };
+
+  const handleSymptomToggle = (symptom) => {
+    setSelectedSymptoms(prev => 
+      prev.includes(symptom) 
+        ? prev.filter(s => s !== symptom)
+        : [...prev, symptom]
+    );
+  };
+
+  const PhaseInfoCard = () => (
+    <Card className="bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20">
+      <div className="flex justify-between items-start mb-4">
+        <div>
+          <h3 className="text-xl font-semibold">{currentPhaseData?.name} Phase</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Day {cycleDay} of your cycle</p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Sparkles className="h-6 w-6 text-pink-500" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        {currentPhaseData?.symptoms.map((symptom, index) => (
+          <div key={index} className="flex items-center space-x-2 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
+            <Target className="h-5 w-5 text-pink-500" />
+            <span>{symptom}</span>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+
+  const NutritionTracker = () => (
+    <Card>
+      <h3 className="font-semibold mb-4 flex items-center">
+        <Apple className="h-5 w-5 mr-2 text-green-500" />
+        Nutrition Tracking
+      </h3>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {nutritionTracking.categories.map((category, index) => (
+          <div key={index} className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+            <div className="flex items-center justify-between mb-2">
+              {category.icon}
+              <span className="text-sm font-medium">{category.name}</span>
+            </div>
+            <div className="text-xs text-gray-500">Target: {category.target}</div>
+            <button
+              onClick={() => handleNutritionLog(category.name, "consumed")}
+              className="mt-2 w-full px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-md text-xs"
+            >
+              Log Intake
+            </button>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
 
   return (
     <div className={`flex h-screen ${darkMode ? "dark" : ""}`}>
@@ -400,19 +615,36 @@ export function Dashboard() {
               onClick={() => navigate("/tracker")}
             />
             <NavItem
-                          icon={<Bot size={20} />}
-                          label="Eve"
-                          onClick={() => navigate("/ChatBot")}
-                          
-                        />
-                        <NavItem
-                                    icon={<ClipboardList size={20} />}
-                                    label="PCOS Diagnosis"
-                                    onClick={() => navigate("/partner")}
-                                    
-                                  />
-                        
-           
+              icon={<ClipboardList size={20} />}
+              label="PCOS Diagnosis"
+              onClick={() => navigate("/partner")}
+            />
+            <NavItem
+              icon={<Stethoscope size={20} />}
+              label="ExpertConsultation"
+              onClick={() => navigate("/consultations")}
+            />
+            <NavItem
+              icon={<Bot size={20} />}
+              label="Eve"
+              onClick={() => navigate("/ChatBot")}
+            />
+            <NavItem
+              icon={<HeartPulse size={20} />}
+              label="HealthLens"
+              onClick={() => navigate("/symptomsanalyzer")}
+            />
+            <NavItem
+              icon={<AppWindowMac size={20} />}
+              label="Parent'sDashboard"
+              onClick={() => navigate("/parents")}
+            />
+            <NavItem
+              icon={<MessageSquare size={20} />}
+              label="Forums"
+              onClick={() => navigate("/forums")}
+            />
+            
           </nav>
         </div>
         <div className="pt-6 mt-6 border-t border-[rgba(var(--foreground),0.1)]">
@@ -746,7 +978,7 @@ export function Dashboard() {
 
       {showNotification && (
         <div className="fixed top-0 left-1/2 transform -translate-x-1/2 bg-[rgb(var(--primary))] text-white p-4 rounded-b-lg shadow-lg animate-slideIn">
-          don’t forget to log your symptoms today!
+          don't forget to log your symptoms today!
         </div>
       )}
 
@@ -794,13 +1026,18 @@ const Card = ({ children, className = "" }) => {
   );
 };
 
-const AnimatedCard = ({ title, value, icon }) => {
+const AnimatedCard = ({ title, value, icon, description }) => {
   return (
     <Card className="transition-all duration-300 hover:shadow-md hover:scale-105">
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm text-[rgb(var(--muted-foreground))]">{title}</p>
           <h3 className="text-2xl font-semibold mt-1">{value}</h3>
+          {description && (
+            <p className="text-xs text-[rgb(var(--muted-foreground))] mt-1">
+              {description}
+            </p>
+          )}
         </div>
         <div className="p-2 bg-[rgba(var(--primary),0.1)] rounded-full">
           {icon}
@@ -895,4 +1132,4 @@ const DataToggle = ({ label, isSelected, onToggle }) => {
   );
 };
 
-
+// export default Dashboard;
