@@ -1,2 +1,3 @@
 # shesync
-built in glb hackathon 4.0
+Built in glb hackathon 4.0 by team web pioneers 
+
